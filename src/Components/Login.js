@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
+import { UserAvtar } from "../Utils/constants";
 const Login = () => {
   const dispatch = useDispatch()
   const [isSignInForm, setisSignInForm] = useState(true);
@@ -29,15 +30,13 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-        console.log(name.current.value);
+      
         updateProfile(user, { 
           displayName: name.current.value, 
-          photoURL: "https://avatars.githubusercontent.com/u/91782014?v=4"
+          photoURL: UserAvtar
         }).then(() => {
           const{uid, email,displayName,photoURL} = auth.currentUser
          dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}))
-          console.log(user);
           navigate("/browse");
         }).catch((error) => {
           setErrorMessage(error.message);
