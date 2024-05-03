@@ -58,7 +58,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth,email.current.value, password.current.value)
   .then((userCredential) => {
     const user = userCredential.user;
-    console.log(user)
     navigate("/browse")
 })
   .catch((error) => {
